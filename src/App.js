@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
 
   UpdateShelf = (Id,shelf)=>{
     const books = [this.state.allBooks]
-    this.props.books.map((oneBook)=>{
+    books.map((oneBook)=>{
       if(oneBook.id == Id){
         oneBook.shelf = shelf
         this.setState((state)=>{

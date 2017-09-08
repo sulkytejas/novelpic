@@ -7,21 +7,22 @@ import sortBy from 'sort-by'
 class BookSearch extends Component{
   state={
     query: " ",
-    shelf:'none'
+    newBooks:[]
   }
   updateQuery = (query)=>{
     BooksAPI.search(query,20).then((book)=>{
         this.setState({query: query.trim()})
     })
   }
-  UpdateShelf = (book,shelf)=>{
-    BooksAPI.update(book,shelf).then((object)=>{
-      console.log(object)
-    })
-  }
-  handleChange = (shelf)=>{
-    this.setState({
-      shelf: shelf
+  UpdateShelf = (Id,shelf)=>{
+    console.log(Id + shelf)
+    this.props.allBooks.map((oneBook)=>{
+      if(oneBook.id == Id){
+        oneBook.shelf = shelf
+        this.setState((state)=>{
+          newBooks:state.newBooks.concat([oneBook])
+        })
+      }
     })
   }
 
@@ -53,13 +54,13 @@ class BookSearch extends Component{
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {SearchedBook.map((book)=>
-              <li key={book.industryIdentifiers.identifier}>
+            {SearchedBook.map((book,i)=>
+              <li key={i}>
                 <div className="book">
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                      <select value={this.state.value} onChange={(event)=> this.handleChange(event.target.value)}>
+                      <select value={this.state.value} onChange={(event)=> this.UpdateShelf(book.id,event.target.value)}>
                         <option value="none" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>

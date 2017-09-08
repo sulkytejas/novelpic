@@ -14,17 +14,11 @@ class BookSearch extends Component{
         this.setState({query: query.trim()})
     })
   }
-  UpdateShelf = (Id,shelf)=>{
-    console.log(Id + shelf)
-    this.props.allBooks.map((oneBook)=>{
-      if(oneBook.id == Id){
-        oneBook.shelf = shelf
-        this.setState((state)=>{
-          newBooks:state.newBooks.concat([oneBook])
-        })
-      }
-    })
-  }
+  handleRequest = (Id,shelf)=>{
+    if(this.props.onUpdateShelf)
+      this.props.onUpdateShelf(Id,shelf)
+    }
+
 
   render(){
     let SearchedBook
@@ -49,7 +43,7 @@ class BookSearch extends Component{
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event)=>this.updateQuery(event.target.value)}/>
+            <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event)=>this.props.updateQuery(event.target.value)}/>
           </div>
         </div>
         <div className="search-books-results">
@@ -60,7 +54,7 @@ class BookSearch extends Component{
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                      <select value={this.state.value} onChange={(event)=> this.UpdateShelf(book.id,event.target.value)}>
+                      <select value={this.state.value} onChange={(event)=> this.handleRequest(book.id,event.target.value)}>
                         <option value="none" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>

@@ -29,7 +29,7 @@ class BooksApp extends React.Component {
       if(oneBook.id == Id){
         console.log(oneBook.title)
         oneBook.shelf = shelf
-        // this.setState({allBooks: books})
+         this.setState({allBooks: books})
       }
     })
   }

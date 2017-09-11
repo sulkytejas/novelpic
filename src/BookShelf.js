@@ -9,9 +9,9 @@ class BookShelf extends Component{
   }
   render(){
     let ShowBooks = [...this.props.allBooks]
-    let Currently = ShowBooks.filter((book)=> book.shelf == "currentlyReading")
-    let Read = ShowBooks.filter((book)=> book.shelf == "Read")
-    let Want = ShowBooks.filter((book)=> book.shelf == "wantToRead")
+    let Currently = ShowBooks.filter((book)=> book.shelf === "currentlyReading")
+    let Read = ShowBooks.filter((book)=> book.shelf === "Read")
+    let Want = ShowBooks.filter((book)=> book.shelf === "wantToRead")
 
     return(
       <div className="list-books">
@@ -25,11 +25,11 @@ class BookShelf extends Component{
               <div className="bookshelf-books">
                 <ol className="books-grid">
                   {
-                    Currently.map((book,i)=>{
+                    Currently.map((book,i)=>(
                       <li key={i}>
                         <div className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${ book.imageLinks &&book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
                               <select>
                                 <option value="none" disabled>Move to...</option>
@@ -44,7 +44,7 @@ class BookShelf extends Component{
                           <div className="book-authors">{book.authors}</div>
                         </div>
                       </li>
-                    })
+                    ))
                   }
                 </ol>
               </div>
@@ -54,11 +54,11 @@ class BookShelf extends Component{
               <div className="bookshelf-books">
                 <ol className="books-grid">
                   {
-                    Want.map((book,i)=>{
+                    Want.map((book,i)=>(
                       <li key={i}>
                         <div className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
                               <select >
                                 <option value="none" disabled>Move to...</option>
@@ -73,7 +73,7 @@ class BookShelf extends Component{
                           <div className="book-authors">{book.authors}</div>
                         </div>
                       </li>
-                    })
+                    ))
                   }
                 </ol>
               </div>
@@ -83,11 +83,11 @@ class BookShelf extends Component{
               <div className="bookshelf-books">
                 <ol className="books-grid">
                   {
-                    Read.map((book,i)=>{
+                    Read.map((book,i)=>(
                       <li key={i}>
                         <div className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.smallThumbnail})` }}></div>
                             <div className="book-shelf-changer">
                               <select>
                                 <option value="none" disabled>Move to...</option>
@@ -102,7 +102,7 @@ class BookShelf extends Component{
                           <div className="book-authors">{book.authors}</div>
                         </div>
                       </li>
-                    })
+                    ))
                   }
                 </ol>
               </div>

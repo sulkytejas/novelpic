@@ -11,7 +11,13 @@ class BookSearch extends Component{
   }
 
   updateQuery = (query)=>{
-    this.setState({query: query.trim()})
+  //  this.setState({query: query.trim()})
+    let trim_query = query.trim()
+    BooksAPI.search(trim_query).then((books)=>{
+      this.setState({
+        searchBook:books
+      })
+    })
   }
   handleRequest = (Id,shelf)=>{
     if(this.props.onUpdateShelf)
@@ -21,13 +27,14 @@ class BookSearch extends Component{
   render(){
     let SearchedBook
     if(this.state.query){
-      let match = new RegExp(escapeRegExp(this.state.query),'i')
-      SearchedBook = this.props.allBooks.filter((book)=>match.test(book.title) || match.test(book.authors))
+      // let match = new RegExp(escapeRegExp(this.state.query),'i')
+      // SearchedBook = this.props.allBooks.filter((book)=>match.test(book.title) || match.test(book.authors))
+      SearchedBook = this.state.searchBook
 
     }else{
       SearchedBook =  this.props.allBooks
     }
-     SearchedBook.sort(sortBy('name'))
+    //  SearchedBook.sort(sortBy('name'))
     return(
       <div className="search-books">
         <div className="search-books-bar">
@@ -46,8 +53,8 @@ class BookSearch extends Component{
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {SearchedBook.map((book,i)=>
-              <li key={i}>
+            {SearchedBook.map((book,i)=>{
+              return <li key={i}>
                 <div className="book">
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
@@ -65,6 +72,8 @@ class BookSearch extends Component{
                   <div className="book-authors">{book.authors}</div>
                 </div>
               </li>
+            }
+
             )}
           </ol>
         </div>

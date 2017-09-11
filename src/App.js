@@ -31,6 +31,10 @@ class BooksApp extends React.Component {
       if(oneBook.id === Id){
         oneBook.shelf = shelf
         this.setState({allBooks: books})
+      }else{
+        this.setState((state)=>{
+          allBooks:state.allBooks.concat([oneBook])
+        })
       }
     })
   }

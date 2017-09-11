@@ -11,7 +11,7 @@ class BookSearch extends Component{
   }
 
   updateQuery = (query)=>{
-  //  this.setState({query: query.trim()})
+   this.setState({query: query.trim()})
     let trim_query = query.trim()
     BooksAPI.search(trim_query).then((books)=>{
       this.setState({

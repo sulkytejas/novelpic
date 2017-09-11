@@ -25,7 +25,6 @@ class BooksApp extends React.Component {
     })
 
   }
-
   UpdateShelf = (Id,shelf)=>{
     const books = [...this.state.allBooks]
     books.map((oneBook)=>{
@@ -43,6 +42,9 @@ class BooksApp extends React.Component {
         <Route exact path="/" render={()=>(
           <BookShelf
             allBooks={this.state.allBooks}
+            onUpdateShelf={(Id,shelf)=>{
+              this.UpdateShelf(Id,shelf)
+            }}
           />
         )}/>
         <Route exact path="/search" render={()=>(

@@ -7,18 +7,16 @@ import sortBy from 'sort-by'
 class BookSearch extends Component{
   state={
     query: " ",
-    newBooks:[]
+    searchBook:[]
   }
+
   updateQuery = (query)=>{
-    BooksAPI.search(query,20).then((book)=>{
-        this.setState({query: query.trim()})
-    })
+    this.setState({query: query.trim()})
   }
   handleRequest = (Id,shelf)=>{
     if(this.props.onUpdateShelf)
       this.props.onUpdateShelf(Id,shelf)
-    }
-
+  }
 
   render(){
     let SearchedBook
@@ -29,7 +27,7 @@ class BookSearch extends Component{
     }else{
       SearchedBook =  this.props.allBooks
     }
-    SearchedBook.sort(sortBy('name'))
+     SearchedBook.sort(sortBy('name'))
     return(
       <div className="search-books">
         <div className="search-books-bar">

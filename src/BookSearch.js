@@ -1,8 +1,6 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import escapeRegExp from 'escape-string-regexp'
-import sortBy from 'sort-by'
 
 class BookSearch extends Component{
   state={
@@ -12,29 +10,22 @@ class BookSearch extends Component{
 
   updateQuery = (query)=>{
    this.setState({query: query.trim()})
-    let trim_query = query.trim()
-    BooksAPI.search(trim_query).then((books)=>{
+   let trim_query = query.trim()
+   BooksAPI.search(trim_query).then((books)=>{
+    if(!books || books.error) return
       this.setState({
         searchBook:books
       })
     })
   }
-  handleRequest = (Id,shelf)=>{
-    if(this.props.onUpdateShelf)
-      this.props.onUpdateShelf(Id,shelf)
-  }
 
   render(){
     let SearchedBook
     if(this.state.query){
-      // let match = new RegExp(escapeRegExp(this.state.query),'i')
-      // SearchedBook = this.props.allBooks.filter((book)=>match.test(book.title) || match.test(book.authors))
       SearchedBook = this.state.searchBook
-
     }else{
       SearchedBook =  this.props.allBooks
     }
-    //  SearchedBook.sort(sortBy('name'))
     return(
       <div className="search-books">
         <div className="search-books-bar">
@@ -57,9 +48,9 @@ class BookSearch extends Component{
               return <li key={i}>
                 <div className="book">
                   <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.smallThumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                      <select value={this.state.value} onChange={(event)=> this.handleRequest(book.id,event.target.value)}>
+                      <select value={this.state.value} onChange={(event)=> this.props.onUpdateShelf(book,event.target.value)}>
                         <option value="none" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>

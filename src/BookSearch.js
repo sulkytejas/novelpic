@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import Book from './Book'
 
 class BookSearch extends Component{
   state={
@@ -43,30 +44,11 @@ class BookSearch extends Component{
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
-            {SearchedBook.map((book,i)=>{
-              return <li key={i}>
-                <div className="book">
-                  <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.smallThumbnail})` }}></div>
-                    <div className="book-shelf-changer">
-                      <select value={this.state.value} onChange={(event)=> this.props.onUpdateShelf(book,event.target.value)}>
-                        <option value="none" disabled>Move to...</option>
-                        <option value="currentlyReading">Currently Reading</option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors}</div>
-                </div>
-              </li>
-            }
-
-            )}
-          </ol>
+          <Book
+            onUpdateShelf={(Id,shelf)=>{
+            this.props.onUpdateShelf(Id,shelf)
+          }}
+          books={SearchedBook}/>
         </div>
       </div>
     )

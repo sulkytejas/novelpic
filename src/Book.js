@@ -11,9 +11,9 @@ class Book extends Component {
             <li key={i}>
               <div className="book">
                 <div className="book-top">
-                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${ book.imageLinks && book.imageLinks.smallThumbnail})` }}></div>
+                  <div className="book-cover" style={{ backgroundImage: `url(${ book.imageLinks && book.imageLinks.smallThumbnail})` }}></div>
                   <div className="book-shelf-changer">
-                    <select value={this.state.value} onChange={(event)=> this.props.onUpdateShelf(book,event.target.value)}>
+                    <select value={book.shelf} onChange={(event)=> this.props.onUpdateShelf(book,event.target.value)}>
                       <option value="none" disabled>Move to...</option>
                       <option value="currentlyReading">Currently Reading</option>
                       <option value="wantToRead">Want to Read</option>
@@ -23,7 +23,7 @@ class Book extends Component {
                   </div>
                 </div>
                 <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors}</div>
+                <div className="book-authors">{(book.authors) ? (book.authors.join(',')): ('')}</div>
               </div>
             </li>
           ))

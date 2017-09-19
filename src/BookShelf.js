@@ -7,9 +7,7 @@ class BookShelf extends Component{
 
   render(){
     let ShowBooks = [...this.props.allBooks]
-    // let Currently = ShowBooks.filter((book)=> book.shelf === "currentlyReading")
-    // let Read = ShowBooks.filter((book)=> book.shelf === "read")
-    // let Want = ShowBooks.filter((book)=> book.shelf === "wantToRead")
+    
 
     return(
       <div className="list-books">
